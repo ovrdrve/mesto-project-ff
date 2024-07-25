@@ -1,26 +1,26 @@
-const handleOpenPopup = (popupType) => {
+const openPopup = (popupType) => {
   popupType.classList.add("popup_is-opened");
 
-  document.addEventListener("mousedown", handleClosePopup);
-  document.addEventListener("keydown", handleClosePopup);
+  document.addEventListener("keydown", closePopupByEsc);
+  popupType.addEventListener("mousedown", closePopupByClick);
 };
 
-const handleClosePopup = (e) => {
+const closePopup = (popupType) => {
+  popupType.classList.remove("popup_is-opened");
+
+  document.removeEventListener("keydown", closePopupByEsc);
+  popupType.removeEventListener("mousedown", closePopupByClick);
+};
+
+const closePopupByEsc = (e) => {
   const currentPopup = document.querySelector(".popup_is-opened");
-  const currentPopupContent = currentPopup.querySelector(".popup__content");
-  const popupCloseButton = currentPopup.querySelector(".popup__close");
-
-  const closePopup = () => {
-    currentPopup.classList.remove("popup_is-opened");
-
-    document.removeEventListener("mousedown", handleClosePopup);
-    document.removeEventListener("keydown", handleClosePopup);
-  };
-
-  if (e.target === popupCloseButton) closePopup();
-  if (!e.composedPath().includes(currentPopupContent) && e.type === "mousedown") closePopup();
-  if (e.key === "Escape") closePopup();
-  if (e.type === "submit") closePopup();
+  if (e.key === "Escape") closePopup(currentPopup);
 };
 
-export { handleOpenPopup, handleClosePopup };
+const closePopupByClick = (e) => {
+  if (e.target.classList.contains("popup") || e.target.classList.contains("popup__close")) {
+    closePopup(e.currentTarget);
+  }
+};
+
+export { openPopup, closePopup };

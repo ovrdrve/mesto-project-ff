@@ -1,7 +1,7 @@
 import "./index.css";
 import { initialCards } from "./components/cards";
-import { createCard, handleRemoveCard, handleLikeCard } from "./components/card";
-import { handleOpenPopup, handleClosePopup } from "./components/modal";
+import { createCard, removeCard, likeCard } from "./components/card";
+import { openPopup, closePopup } from "./components/modal";
 
 const placesList = document.querySelector(".places__list");
 
@@ -21,6 +21,17 @@ const cardForm = popupTypeNewCard.querySelector(".popup__form");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
+const popupTypeImage = document.querySelector(".popup_type_image");
+const popupImage = popupTypeImage.querySelector(".popup__image");
+
+const openCardImagePopup = (link, name) => {
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupTypeImage.querySelector(".popup__caption").textContent = name;
+
+  openPopup(popupTypeImage);
+};
+
 profileEditButton.addEventListener("mouseup", () => {
   const titleText = profileTitle.textContent;
   const descriptionText = profileDescription.textContent;
@@ -28,11 +39,11 @@ profileEditButton.addEventListener("mouseup", () => {
   editNameInput.value = titleText;
   editDescriptionInput.value = descriptionText;
 
-  handleOpenPopup(popupTypeEdit);
+  openPopup(popupTypeEdit);
 });
 
 profileAddButton.addEventListener("mouseup", () => {
-  handleOpenPopup(popupTypeNewCard);
+  openPopup(popupTypeNewCard);
 });
 
 editForm.addEventListener("submit", (e) => {
@@ -44,7 +55,7 @@ editForm.addEventListener("submit", (e) => {
   profileTitle.textContent = nameValue;
   profileDescription.textContent = descriptionValue;
 
-  handleClosePopup(e);
+  closePopup(popupTypeEdit);
 });
 
 cardForm.addEventListener("submit", (e) => {
@@ -58,14 +69,13 @@ cardForm.addEventListener("submit", (e) => {
     link: cardLink,
   };
 
-  placesList.prepend(createCard(cardElement, handleRemoveCard, handleLikeCard, handleOpenPopup));
+  placesList.prepend(createCard(cardElement, removeCard, likeCard, openCardImagePopup));
 
-  cardNameInput.value = "";
-  cardLinkInput.value = "";
+  cardForm.reset();
 
-  handleClosePopup(e);
+  closePopup(popupTypeNewCard);
 });
 
-initialCards.map((item) => {
-  placesList.append(createCard(item, handleRemoveCard, handleLikeCard, handleOpenPopup));
+initialCards.forEach((item) => {
+  placesList.append(createCard(item, removeCard, likeCard, openCardImagePopup));
 });
