@@ -2,6 +2,7 @@ import "./index.css";
 import { initialCards } from "./components/cards";
 import { createCard, removeCard, likeCard } from "./components/card";
 import { openPopup, closePopup } from "./components/modal";
+import { clearValidation, enableValidation, validationConfig } from "./components/validation";
 
 const placesList = document.querySelector(".places__list");
 
@@ -39,10 +40,13 @@ profileEditButton.addEventListener("mouseup", () => {
   editNameInput.value = titleText;
   editDescriptionInput.value = descriptionText;
 
+  console.log("pre clear")
+  clearValidation(editForm, validationConfig);
   openPopup(popupTypeEdit);
 });
 
 profileAddButton.addEventListener("mouseup", () => {
+  clearValidation(cardForm, validationConfig);
   openPopup(popupTypeNewCard);
 });
 
@@ -79,3 +83,5 @@ cardForm.addEventListener("submit", (e) => {
 initialCards.forEach((item) => {
   placesList.append(createCard(item, removeCard, likeCard, openCardImagePopup));
 });
+
+enableValidation(validationConfig);
