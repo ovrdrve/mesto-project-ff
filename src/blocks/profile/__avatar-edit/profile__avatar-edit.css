@@ -1,0 +1,21 @@
+.profile__avatar-edit {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  margin: 0;
+  border: none;
+  padding: 47px;
+  padding: 0;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.8) url("../../../images/avatar-edit.svg") center no-repeat;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.profile__avatar-edit:hover {
+  opacity: 1;
+}
