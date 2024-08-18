@@ -110,6 +110,17 @@ const updateUserAvatar = (avatar) => {
   });
 };
 
+const getUrlContentType = (url) => {
+  return fetch(`${url}`, {
+    method: "HEAD",
+  }).then((res) => {
+    if (res.ok) {
+      return res.headers.get("Content-Type");
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
+};
+
 export {
   getUserData,
   getInitialCards,
@@ -119,4 +130,5 @@ export {
   addLike,
   removeLike,
   updateUserAvatar,
+  getUrlContentType,
 };

@@ -8,6 +8,7 @@ import {
   updateUserData,
   postNewCard,
   updateUserAvatar,
+  getUrlContentType,
 } from "./components/api";
 
 const placesList = document.querySelector(".places__list");
@@ -109,17 +110,25 @@ cardForm.addEventListener("submit", (e) => {
 avatarForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  renderLoading(e.target, true);
-  updateUserAvatar(avatarLinkInput.value)
-    .then((userData) => {
-      profileImage.style.backgroundImage = `url("${userData.avatar}")`;
+  getUrlContentType(avatarLinkInput.value)
+    .then((contentType) => {
+      if (contentType === "image/jpeg" || "image/png") {
+        renderLoading(e.target, true);
+        updateUserAvatar(avatarLinkInput.value)
+          .then((userData) => {
+            profileImage.style.backgroundImage = `url("${userData.avatar}")`;
+          })
+          .catch((err) => console.log(`Ошибка: ${err}`))
+          .finally(() => {
+            renderLoading(e.target, false);
+            cardForm.reset();
+            closePopup(popupTypeAvatar);
+          });
+      } else {
+        console.log("URL изображения не действителен");
+      }
     })
-    .catch((err) => console.log(`Ошибка: ${err}`))
-    .finally(() => {
-      renderLoading(e.target, false);
-      cardForm.reset();
-      closePopup(popupTypeAvatar);
-    });
+    .catch((err) => console.log(`Ошибка: ${err}`));
 });
 
 Promise.all([getInitialCards(), getUserData()])
