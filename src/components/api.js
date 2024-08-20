@@ -11,13 +11,13 @@ const apiConfig = {
 const getUserData = () => {
   return fetch(`${apiConfig.baseUrl}/users/me`, {
     headers: apiConfig.headers,
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 const getInitialCards = () => {
   return fetch(`${apiConfig.baseUrl}/cards`, {
     headers: apiConfig.headers,
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 const updateUserData = (name, about) => {
@@ -28,7 +28,7 @@ const updateUserData = (name, about) => {
       name,
       about,
     }),
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 const postNewCard = (name, link) => {
@@ -39,28 +39,28 @@ const postNewCard = (name, link) => {
       name,
       link,
     }),
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 const deleteCard = (id) => {
   return fetch(`${apiConfig.baseUrl}/cards/${id}`, {
     method: "DELETE",
     headers: apiConfig.headers,
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 const addLike = (id) => {
   return fetch(`${apiConfig.baseUrl}/cards/likes/${id}`, {
     method: "PUT",
     headers: apiConfig.headers,
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 const removeLike = (id) => {
   return fetch(`${apiConfig.baseUrl}/cards/likes/${id}`, {
     method: "DELETE",
     headers: apiConfig.headers,
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 const updateUserAvatar = (avatar) => {
@@ -70,13 +70,13 @@ const updateUserAvatar = (avatar) => {
     body: JSON.stringify({
       avatar,
     }),
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 const getUrlContentType = (url) => {
   return fetch(`${url}`, {
     method: "HEAD",
-  }).then(checkResponse(res));
+  }).then(checkResponse);
 };
 
 export {
