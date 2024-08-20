@@ -29,22 +29,29 @@ const createCard = (cardElement, userId, onDelete, onLike, onOpen) => {
 };
 
 const removeCard = (e, id) => {
-  deleteCard(id);
-  e.target.closest(".card").remove();
+  deleteCard(id)
+    .then(() => {
+      e.target.closest(".card").remove();
+    })
+    .catch((err) => console.log(`Ошибка: ${err}`));
 };
 
 const likeCard = (e, id) => {
   const currentCard = e.target.closest(".card");
   if (e.target.classList.contains("card__like-button_is-active")) {
     e.target.classList.remove("card__like-button_is-active");
-    removeLike(id).then((cardData) => {
-      currentCard.querySelector(".card__like-counter").textContent = cardData.likes.length;
-    });
+    removeLike(id)
+      .then((cardData) => {
+        currentCard.querySelector(".card__like-counter").textContent = cardData.likes.length;
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
   } else {
     e.target.classList.add("card__like-button_is-active");
-    addLike(id).then((cardData) => {
-      currentCard.querySelector(".card__like-counter").textContent = cardData.likes.length;
-    });
+    addLike(id)
+      .then((cardData) => {
+        currentCard.querySelector(".card__like-counter").textContent = cardData.likes.length;
+      })
+      .catch((err) => console.log(`Ошибка: ${err}`));
   }
 };
 

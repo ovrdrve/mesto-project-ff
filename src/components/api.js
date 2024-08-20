@@ -1,3 +1,5 @@
+import { checkResponse } from "../utils/checkResponse";
+
 const apiConfig = {
   baseUrl: "https://nomoreparties.co/v1/wff-cohort-20",
   headers: {
@@ -9,23 +11,13 @@ const apiConfig = {
 const getUserData = () => {
   return fetch(`${apiConfig.baseUrl}/users/me`, {
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse(res));
 };
 
 const getInitialCards = () => {
   return fetch(`${apiConfig.baseUrl}/cards`, {
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse(res));
 };
 
 const updateUserData = (name, about) => {
@@ -36,12 +28,7 @@ const updateUserData = (name, about) => {
       name,
       about,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse(res));
 };
 
 const postNewCard = (name, link) => {
@@ -52,47 +39,28 @@ const postNewCard = (name, link) => {
       name,
       link,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse(res));
 };
 
 const deleteCard = (id) => {
   return fetch(`${apiConfig.baseUrl}/cards/${id}`, {
     method: "DELETE",
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (!res.ok) {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  }).then(checkResponse(res));
 };
 
 const addLike = (id) => {
   return fetch(`${apiConfig.baseUrl}/cards/likes/${id}`, {
     method: "PUT",
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse(res));
 };
 
 const removeLike = (id) => {
   return fetch(`${apiConfig.baseUrl}/cards/likes/${id}`, {
     method: "DELETE",
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse(res));
 };
 
 const updateUserAvatar = (avatar) => {
@@ -102,23 +70,13 @@ const updateUserAvatar = (avatar) => {
     body: JSON.stringify({
       avatar,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse(res));
 };
 
 const getUrlContentType = (url) => {
   return fetch(`${url}`, {
     method: "HEAD",
-  }).then((res) => {
-    if (res.ok) {
-      return res.headers.get("Content-Type");
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(checkResponse(res));
 };
 
 export {

@@ -37,11 +37,12 @@ const avatarForm = popupTypeAvatar.querySelector(".popup__form");
 
 const popupTypeImage = document.querySelector(".popup_type_image");
 const popupImage = popupTypeImage.querySelector(".popup__image");
+const popupCaption = popupTypeImage.querySelector(".popup__caption");
 
 const openCardImagePopup = (link, name) => {
   popupImage.src = link;
   popupImage.alt = name;
-  popupTypeImage.querySelector(".popup__caption").textContent = name;
+  popupCaption.textContent = name;
 
   openPopup(popupTypeImage);
 };
@@ -98,11 +99,11 @@ cardForm.addEventListener("submit", (e) => {
       placesList.prepend(
         createCard(cardData, cardData.owner._id, removeCard, likeCard, openCardImagePopup)
       );
+      cardForm.reset();
     })
     .catch((err) => console.log(`Ошибка: ${err}`))
     .finally(() => {
       renderLoading(e.target, false);
-      cardForm.reset();
       closePopup(popupTypeNewCard);
     });
 });

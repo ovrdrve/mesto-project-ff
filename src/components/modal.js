@@ -13,8 +13,10 @@ const closePopup = (popupType) => {
 };
 
 const closePopupByEsc = (e) => {
-  const currentPopup = document.querySelector(".popup_is-opened");
-  if (e.key === "Escape") closePopup(currentPopup);
+  if (e.key === "Escape") {
+    const currentPopup = document.querySelector(".popup_is-opened");
+    closePopup(currentPopup);
+  }
 };
 
 const closePopupByClick = (e) => {
