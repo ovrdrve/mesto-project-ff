@@ -82,11 +82,11 @@ editForm.addEventListener("submit", (e) => {
     .then((userData) => {
       profileTitle.textContent = userData.name;
       profileDescription.textContent = userData.about;
+      closePopup(popupTypeEdit);
     })
     .catch((err) => console.log(`Ошибка: ${err}`))
     .finally(() => {
       renderLoading(e.target, false);
-      closePopup(popupTypeEdit);
     });
 });
 
@@ -100,11 +100,11 @@ cardForm.addEventListener("submit", (e) => {
         createCard(cardData, cardData.owner._id, removeCard, likeCard, openCardImagePopup)
       );
       cardForm.reset();
+      closePopup(popupTypeNewCard);
     })
     .catch((err) => console.log(`Ошибка: ${err}`))
     .finally(() => {
       renderLoading(e.target, false);
-      closePopup(popupTypeNewCard);
     });
 });
 
@@ -117,13 +117,13 @@ avatarForm.addEventListener("submit", (e) => {
         renderLoading(e.target, true);
         updateUserAvatar(avatarLinkInput.value)
           .then((userData) => {
+            cardForm.reset();
+            closePopup(popupTypeAvatar);
             profileImage.style.backgroundImage = `url("${userData.avatar}")`;
           })
           .catch((err) => console.log(`Ошибка: ${err}`))
           .finally(() => {
             renderLoading(e.target, false);
-            cardForm.reset();
-            closePopup(popupTypeAvatar);
           });
       } else {
         console.log("URL изображения не действителен");

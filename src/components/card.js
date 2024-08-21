@@ -39,16 +39,16 @@ const removeCard = (e, id) => {
 const likeCard = (e, id) => {
   const currentCard = e.target.closest(".card");
   if (e.target.classList.contains("card__like-button_is-active")) {
-    e.target.classList.remove("card__like-button_is-active");
     removeLike(id)
       .then((cardData) => {
+        e.target.classList.remove("card__like-button_is-active");
         currentCard.querySelector(".card__like-counter").textContent = cardData.likes.length;
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
   } else {
-    e.target.classList.add("card__like-button_is-active");
     addLike(id)
       .then((cardData) => {
+        e.target.classList.add("card__like-button_is-active");
         currentCard.querySelector(".card__like-counter").textContent = cardData.likes.length;
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
